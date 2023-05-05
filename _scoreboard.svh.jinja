@@ -1,0 +1,47 @@
+{% extends "_base.svh.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The {{agent.name|upper}} UVM Scoreboard
+//==============================================================================
+{% endblock %}
+{% block body %}
+class {{ agent.name }}_scoreboard extends uvm_scoreboard;
+    `uvm_component_utils ({{ agent.name }}_scoreboard)
+
+    //------------------------------------------
+    // Members
+    //------------------------------------------
+    // TLM Analysis Port to receive data objects from other TB components
+    uvm_analysis_imp #({{ agent.name }}_seq_item, {{ agent.name }}_scoreboard) ap_imp;
+
+
+    function new (string name = "{{ agent.name }}_scoreboard", uvm_component parent = null);
+    super.new (name, parent);
+    endfunction
+
+
+    // Instantiate the analysis port, because afterall, its a class object
+    function void build_phase (uvm_phase phase);
+        ap_imp = new ("ap_imp", this);
+    endfunction
+
+
+    // Define action to be taken when a packet is received via the declared analysis port
+    virtual function void write ({{ agent.name }}_seq_item {{ agent.name }}_frame);
+        // TODO: implement
+    endfunction
+
+
+    // Run Comparison Checks/Tasks
+    virtual task run_phase(uvm_phase phase);
+        // TODO: Implement
+    endtask : run_phase
+
+
+    // Perform any remaining comparisons or checks before end of simulation
+    virtual function void check_phase (uvm_phase phase);
+        super().check_phase(phase)
+    endfunction
+
+endclass
+{% endblock %}

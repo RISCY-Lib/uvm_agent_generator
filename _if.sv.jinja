@@ -1,0 +1,12 @@
+{% extends "_base.sv.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The UVM {{ agent.name|upper }} Interface
+//==============================================================================
+{% endblock %}
+{% block body %}
+interface {{agent.name}}_if;
+{% for port in agent.ports %}    {{port.type}} {{port.name}};
+{% endfor %}
+endinterface: {{agent.name}}_if
+{% endblock %}

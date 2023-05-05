@@ -1,0 +1,53 @@
+{% extends "_base.svh.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The UVM {{ agent.name|upper }} Agent
+//==============================================================================
+{% endblock %}
+{% block body %}
+class {{ agent.name }}_agent extends uvm_agent;
+    `uvm_component_utils({{ agent.name }}_agent)
+
+    //------------------------------------------
+    // Members
+    //------------------------------------------
+    {{ agent.name }}_agent_config m_cfg;
+
+    uvm_analysis_port #({{ agent.name }}_seq_item) ap;
+    {{ agent.name }}_monitor   m_monitor;
+    {{ agent.name }}_sequencer m_sequencer;
+    {{ agent.name }}_driver    m_driver;
+
+    //------------------------------------------
+    // Methods
+    //------------------------------------------
+
+    // Standard UVM Methods:
+    function new(string name = "{{ agent.name }}_agent", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    function void build_phase(uvm_phase phase);
+        `get_config({{ agent.name }}_agent_config, m_cfg, "{{ agent.name }}_agent_config")
+        // Monitor is always present
+        m_monitor = {{ agent.name }}_monitor::type_id::create("m_monitor", this);
+        m_monitor.m_cfg = m_cfg;
+
+        // Only build the driver and sequencer if active
+        if(m_cfg.active == UVM_ACTIVE) begin
+            m_driver = {{ agent.name }}_driver::type_id::create("m_driver", this);
+            m_driver.m_cfg = m_cfg;
+            m_sequencer = {{ agent.name }}_sequencer::type_id::create("m_sequencer", this);
+        end
+    endfunction: build_phase
+
+    function void connect_phase(uvm_phase phase);
+        ap = m_monitor.ap;
+
+        // Only connect the driver and the sequencer if active
+        if(m_cfg.active == UVM_ACTIVE) begin
+            m_driver.seq_item_port.connect(m_sequencer.seq_item_export);
+        end
+    endfunction: connect_phase
+endclass: {{ agent.name }}_agent
+{% endblock %}{# body #}

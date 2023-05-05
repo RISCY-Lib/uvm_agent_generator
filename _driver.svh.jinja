@@ -1,0 +1,47 @@
+{% extends "_base.svh.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The {{agent.name|upper}} UVM Driver
+//==============================================================================
+{% endblock %}
+{% block body %}
+class {{ agent.name }}_driver extends uvm_driver #({{ agent.name }}_seq_item);
+    `uvm_component_utils({{ agent.name }}_driver)
+
+    //------------------------------------------
+    // Members
+    //------------------------------------------
+
+    // Virtual Interface
+    local virtual {{ agent.name }}_driver_bfm m_bfm;
+
+    // Config
+    {{ agent.name }}_agent_config m_cfg;
+
+    // Sequence Item
+    {{ agent.name }}_seq_item {{ agent.name }}_item;
+
+    // TODO: Any custom class members
+
+    //------------------------------------------
+    // Methods
+    //------------------------------------------
+
+    // Standard UVM Methods:
+    function new(string name = "{{ agent.name }}_driver", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        `get_config({{ agent.name }}_agent_config, m_cfg, "{{ agent.name }}_agent_config")
+        m_bfm = m_cfg.drv_bfm;
+    endfunction : build_phase
+
+    task run_phase(uvm_phase phase);
+
+        // TODO: Implement driving
+
+    endtask: run_phase
+endclass: {{ agent.name }}_driver
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "_base.svh.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The agent configuration class for the {{agent.name|upper}} UVM Agent
+//==============================================================================
+{% endblock %}
+{% block body %}
+class {{ agent.name }}_agent_config extends uvm_object;
+
+    localparam string s_my_config_id = "{{ agent.name }}_agent_config";
+
+    // UVM Factory Registration Macro
+    `uvm_object_utils({{ agent.name }}_agent_config)
+
+    //------------------------------------------
+    // Members
+    //------------------------------------------
+
+    // BFM Virtual Interfaces
+    virtual {{ agent.name }}_monitor_bfm mon_bfm;
+    virtual {{ agent.name }}_driver_bfm  drv_bfm;
+
+    // TODO: Add custom configuration
+
+    // Is the agent active or passive
+    uvm_active_passive_enum active = UVM_ACTIVE;
+    bit has_functional_coverage = 0;
+
+    //------------------------------------------
+    // Methods
+    //------------------------------------------
+
+    function new(string name = "{{ agent.name }}_agent_config");
+        super.new(name);
+    endfunction
+
+    // Returns the global {{ agent.name }} Agent Configuration
+    static function {{ agent.name }}_agent_config get_config( uvm_component c );
+        {{ agent.name }}_agent_config t;
+
+        if (!uvm_config_db #({{ agent.name }}_agent_config)::get(c, "", s_my_config_id, t) )
+            `uvm_fatal("CONFIG_LOAD", $sformatf("Cannot get() configuration %s from uvm_config_db. Have you set() it?", s_my_config_id))
+
+        return t;
+    endfunction
+
+endclass: {{ agent.name }}_agent_config
+{% endblock %}{# body #}

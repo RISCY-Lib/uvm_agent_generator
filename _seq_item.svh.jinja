@@ -1,0 +1,68 @@
+{% extends "_base.svh.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The {{ agent.name }} UVM Sequence Item Class
+//==============================================================================
+{% endblock %}
+{% block body %}
+class {{ agent.name }}_seq_item extends uvm_sequence_item;
+    `uvm_object_utils({{ agent.name }}_seq_item)
+
+    //----------------------------------------------
+    // Data Members (Outputs rand, inputs non-rand)
+    //----------------------------------------------
+
+    // TODO: Implement data members
+
+    //------------------------------------------
+    // Constraints
+    //------------------------------------------
+
+    // TODO:
+
+    //------------------------------------------
+    // Methods
+    //------------------------------------------
+
+    // Standard UVM Methods:
+    function new(string name = "{{ agent.name }}_seq_item");
+        super.new(name);
+    endfunction
+
+    function void do_copy(uvm_object rhs);
+        {{ agent.name }}_seq_item to_copy;
+
+        if(!$cast(to_copy, rhs)) begin
+        `uvm_fatal("do_copy", "cast of rhs object failed")
+        end
+        super.do_copy(rhs);
+        // TODO: Copy over data members:
+
+    endfunction:do_copy
+
+    function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+        {{ agent.name }}_seq_item to_copy;
+
+        if(!$cast(to_copy, rhs)) begin
+            `uvm_error("do_copy", "cast of rhs object failed")
+            return 0;
+        end
+        return super.do_compare(rhs, comparer) // TODO: Add class custom compare
+    endfunction:do_compare
+
+    function string convert2string();
+        string s;
+        // TODO: Create string conversion code
+        return s;
+    endfunction:convert2string
+
+    function void do_print(uvm_printer printer);
+        printer.m_string = convert2string();
+    endfunction:do_print
+
+    function void do_record(uvm_recorder recorder);
+        super.do_record(recorder);
+    endfunction:do_record
+
+endclass: {{ agent.name }}_seq_item
+{% endblock %}

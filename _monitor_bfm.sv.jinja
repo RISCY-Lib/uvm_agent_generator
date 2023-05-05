@@ -1,0 +1,32 @@
+{% extends "_base.sv.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The {{agent.name|upper}} Bus Functional Model - Monitor
+//==============================================================================
+{% endblock %}
+{% block body %}
+interface {{ agent.name }}_monitor_bfm
+    ( {{ agent.name }}_if {{ agent.name }} );
+
+    `include "uvm_macros.svh"
+    import uvm_pkg::*;
+    import {{ agent.name }}_agent_pkg::*;
+
+    //------------------------------------------
+    // Members
+    //------------------------------------------
+    {{ agent.name }}_monitor proxy;
+
+    // Config
+    {{ agent.name }}_agent_config m_cfg;
+
+    //------------------------------------------
+    // Methods
+    //------------------------------------------
+
+    task run();
+        // TODO: Implement moitor run task
+    endtask: run
+
+endinterface: {{ agent.name }}_monitor_bfm
+{% endblock %}

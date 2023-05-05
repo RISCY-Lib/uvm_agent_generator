@@ -1,0 +1,24 @@
+{% extends "_base.sv.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The Package for the UVM {{ agent.name|upper }} Agent
+//==============================================================================
+{% endblock %}
+{% block body %}
+package {{ agent.name }}_agent_pkg;
+
+    import uvm_pkg::*;
+    `include "uvm_macros.svh"
+    `include "config_macro.svh"
+
+    `include "{{ agent.name }}_defines.svh"
+
+    `include "{{ agent.name }}_seq_item.svh"
+    `include "{{ agent.name }}_agent_config.svh"
+    `include "{{ agent.name }}_driver.svh"
+    `include "{{ agent.name }}_monitor.svh"
+    typedef uvm_sequencer #({{ agent.name }}_seq_item) {{ agent.name }}_sequencer;
+    `include "{{ agent.name }}_agent.svh"
+
+endpackage: {{ agent.name }}_agent_pkg
+{% endblock %}

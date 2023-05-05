@@ -1,0 +1,31 @@
+{% extends "_base.sv.jinja" %}
+{% block comment_header %}
+//==============================================================================
+// Description: The {{agent.name|upper}} Bus Functional Model - Driver
+//==============================================================================
+{% endblock %}
+{% block body %}
+interface {{ agent.name }}_driver_bfm
+    ( {{ agent.name }}_if {{ agent.name }} );
+
+    `include "uvm_macros.svh"
+    import uvm_pkg::*;
+    import {{ agent.name }}_agent_pkg::*;
+
+
+    //------------------------------------------
+    // {{ agent.name }} Interface Driving Methods
+    //------------------------------------------
+
+    // Initialize {{ agent.name }} signals
+    task {{ agent.name }}_init;
+        // TODO: Initialize signals
+    endtask : {{ agent.name }}_init
+
+
+    // Drive a {{ agent.name }} Command Item
+    task drive({{ agent.name }}_seq_item {{ agent.name }}_item);
+        // TODO: Create the driver logic
+    endtask : drive
+endinterface: {{ agent.name }}_driver_bfm
+{% endblock %}

@@ -1,0 +1,11 @@
+{% block copyright %}
+//==============================================================================
+{% for line in agent.copyright %}// {{line}}
+{% endfor %}//==============================================================================
+{% endblock %}
+{% block comment_header %}{% endblock %}
+`ifndef __{{ agent.name|upper }}{{ agent.file|upper}}_SVH__
+`define __{{ agent.name|upper }}{{ agent.file|upper}}_SVH__
+{% block body %}
+{% endblock %}
+`endif // __{{ agent.name|upper }}{{ agent.file|upper}}_SVH__
