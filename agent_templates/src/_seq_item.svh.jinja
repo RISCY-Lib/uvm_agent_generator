@@ -47,7 +47,7 @@ class {{ agent.name }}_seq_item extends uvm_sequence_item;
             `uvm_error("do_copy", "cast of rhs object failed")
             return 0;
         end
-        return super.do_compare(rhs, comparer) // TODO: Add class custom compare
+        return super.do_compare(rhs, comparer); // TODO: Add class custom compare
     endfunction:do_compare
 
     function string convert2string();
