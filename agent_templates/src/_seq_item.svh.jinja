@@ -18,7 +18,7 @@ class {{ agent.name }}_seq_item extends uvm_sequence_item;
     // Constraints
     //------------------------------------------
 
-    // TODO:
+    // TODO: Implement Randomization Constraints
 
     //------------------------------------------
     // Methods
@@ -33,7 +33,7 @@ class {{ agent.name }}_seq_item extends uvm_sequence_item;
         {{ agent.name }}_seq_item to_copy;
 
         if(!$cast(to_copy, rhs)) begin
-        `uvm_fatal("do_copy", "cast of rhs object failed")
+            `uvm_fatal("do_copy", "cast of rhs object failed")
         end
         super.do_copy(rhs);
         // TODO: Copy over data members:
